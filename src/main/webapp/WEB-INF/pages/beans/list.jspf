@@ -1,0 +1,7 @@
+
+He loves to eat these fruits and vegetables :
+<ul>
+   	<c:forEach var="item" items="${fruitsAndVegetables}">
+   		<li>${item}</li>
+   	</c:forEach>
+</ul>

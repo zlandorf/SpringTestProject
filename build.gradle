@@ -1,0 +1,56 @@
+buildscript {
+    ext {
+        springBootVersion = '1.2.2.RELEASE'
+    }
+    repositories {
+    	flatDir { dirs "src/main/webapp/WEB-INF/lib" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'war'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+//apply plugin: 'idea'
+apply plugin: 'spring-boot' 
+
+jar {
+    baseName = 'proto'
+    version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+//httpPort=8090
+
+repositories {
+    mavenCentral()
+}
+
+war {    
+    webInf { from 'src/main/webapp/WEB-INF'} // adds a file-set to the WEB-INF dir.    
+    classpath fileTree('src/main/webapp/WEB-INF/lib') // adds a file-set to the WEB-INF/lib dir.
+}
+
+dependencies {
+//    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.apache.tomcat.embed:tomcat-embed-jasper")
+    compile("jstl:jstl:1.2")
+
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+eclipse {
+    classpath {
+         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+         containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
