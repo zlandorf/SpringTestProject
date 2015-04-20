@@ -1,4 +1,4 @@
-package demo.greeting;
+package api.greeting;
 
 public class Greeting {
 	private long id;
