@@ -7,6 +7,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -24,14 +25,22 @@ public class ArticlesDaoImpl implements ArticlesDao {
 	
 	@Override
 	public List<Article> getArticles() {
-		return jdbcTemplate.query(
-			"select id, title, description from articles",
-			new RowMapper<Article>() {
-				@Override
-				public Article mapRow(ResultSet rs, int rowNum) throws SQLException {
-					return new Article(rs.getLong("id"), rs.getString("title"), rs.getString("description"));
-				}
-			}
-		);
+		return jdbcTemplate.query("select id, title, description from articles", new ArticleMapper());
+	}
+
+	@Override
+	public Article getArticle(long id) {
+		try {
+			return jdbcTemplate.queryForObject("select id, title, description from articles where id = ?",  new Object[]{id}, new ArticleMapper());
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+	
+	private static final class ArticleMapper implements RowMapper<Article> {
+		@Override
+		public Article mapRow(ResultSet rs, int rowNum) throws SQLException {
+			return new Article(rs.getLong("id"), rs.getString("title"), rs.getString("description"));
+		}
 	}
 }

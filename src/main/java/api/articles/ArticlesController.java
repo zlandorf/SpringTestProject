@@ -3,10 +3,13 @@ package api.articles;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.articles.dao.ArticlesDao;
+import api.error.ResourceNotFoundException;
 
 @RestController
 public class ArticlesController {
@@ -14,8 +17,17 @@ public class ArticlesController {
 	@Autowired
 	private ArticlesDao articlesDao;
 	
-	@RequestMapping("/articles")
+	@RequestMapping(value="/articles", method=RequestMethod.GET)
 	public List<Article> getArticles() {
 		return articlesDao.getArticles();
+	}
+	
+	@RequestMapping(value="/articles/{id}", method=RequestMethod.GET)
+	public Article getArticle(@PathVariable long id) {
+		Article article = articlesDao.getArticle(id);
+		
+		if (article == null) throw new ResourceNotFoundException(String.format("Article [id=%d]", id));
+		
+		return article;
 	}
 }

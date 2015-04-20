@@ -24,7 +24,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	public DataSource dataSource() {
 		DataSource dataSource = new EmbeddedDatabaseBuilder()
 			.setType(EmbeddedDatabaseType.H2)
-//			.addScript("classpath:schema.sql")
+			.addScript("classpath:schema.sql")
 			.build();
 		return dataSource;
 	}
