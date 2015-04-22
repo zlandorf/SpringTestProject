@@ -1,19 +1,35 @@
 package api.articles;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+
 public class Article {
-	private long id;
-	private String title;
-	private String description;
+	interface ListView {}
 	
-	public Article(long id, String title, String description) {
+	@JsonView(ListView.class)
+	private long id;
+	@JsonView(ListView.class)
+	private String title;
+	@JsonView(ListView.class)
+	private String description;
+	@JsonView(ListView.class)
+	private int countComments;
+
+	private List<Comment> comments;
+	
+	public Article(long id, String title, String description, int countComments) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
+		this.countComments = countComments;
+		this.comments = null;
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("Article[id=%d, title='%s', description='%s...']\n", this.id, this.title, this.description.substring(0,  40));
+		return String.format("Article[id=%d, title='%s', description='%s...', comments count='%d']\n", this.id, this.title, this.description.substring(0,  40), this.countComments);
 	}
 
 	public long getId() {
@@ -38,5 +54,21 @@ public class Article {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getCountComments() {
+		return countComments;
+	}
+
+	public void setCountComments(int countComments) {
+		this.countComments = countComments;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 }

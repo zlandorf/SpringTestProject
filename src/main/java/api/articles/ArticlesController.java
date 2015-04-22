@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 import api.articles.dao.ArticlesDao;
 import api.error.ResourceNotFoundException;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 @RestController
 public class ArticlesController {
 	
 	@Autowired
 	private ArticlesDao articlesDao;
 	
+	@JsonView(Article.ListView.class)
 	@RequestMapping(value="/articles", method=RequestMethod.GET)
 	public List<Article> getArticles() {
 		return articlesDao.getArticles();

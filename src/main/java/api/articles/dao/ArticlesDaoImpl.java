@@ -16,6 +16,10 @@ import api.articles.Article;
 
 @Repository
 public class ArticlesDaoImpl implements ArticlesDao {
+	
+	@Autowired
+	protected CommentsDao commentsDao;
+	
 	protected JdbcTemplate jdbcTemplate;
 	
 	@Autowired
@@ -25,22 +29,24 @@ public class ArticlesDaoImpl implements ArticlesDao {
 	
 	@Override
 	public List<Article> getArticles() {
-		return jdbcTemplate.query("select id, title, description from articles", new ArticleMapper());
+		return jdbcTemplate.query("select articles.id, articles.title, articles.description, (select count(*) from comments where comments.article_id = articles.id) as article_count from articles", new ArticleMapper());
 	}
 
 	@Override
 	public Article getArticle(long id) {
 		try {
-			return jdbcTemplate.queryForObject("select id, title, description from articles where id = ?",  new Object[]{id}, new ArticleMapper());
+			Article article = jdbcTemplate.queryForObject("select articles.id, articles.title, articles.description, (select count(*) from comments where comments.article_id = articles.id) as article_count from articles where id = ?",  new Object[]{id}, new ArticleMapper());
+			article.setComments(commentsDao.getComments(article.getId()));
+			return article;
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
 	}
-	
+
 	private static final class ArticleMapper implements RowMapper<Article> {
 		@Override
 		public Article mapRow(ResultSet rs, int rowNum) throws SQLException {
-			return new Article(rs.getLong("id"), rs.getString("title"), rs.getString("description"));
+			return new Article(rs.getLong("id"), rs.getString("title"), rs.getString("description"), rs.getInt("article_count"));
 		}
 	}
 }

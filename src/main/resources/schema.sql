@@ -6,3 +6,11 @@ INSERT INTO articles(title, description) VALUES('Article number two', 'Lorem ips
 INSERT INTO articles(title, description) VALUES('Article number three', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
 INSERT INTO articles(title, description) VALUES('Article number four', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
 INSERT INTO articles(title, description) VALUES('Article number five', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.');
+
+drop table comments if exists;
+create table comments (id serial, article_id integer, comment text);
+
+
+INSERT INTO comments(article_id, comment) VALUES((SELECT id FROM articles WHERE title = 'Article number two'), 'OP will deliver');
+INSERT INTO comments(article_id, comment) VALUES((SELECT id FROM articles WHERE title = 'Article number two'), 'still waiting ....');
+INSERT INTO comments(article_id, comment) VALUES((SELECT id FROM articles WHERE title = 'Article number five'), 'first !');
