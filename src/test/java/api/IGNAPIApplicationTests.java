@@ -13,8 +13,7 @@ import api.IGNAPIApplication;
 @WebAppConfiguration
 public class IGNAPIApplicationTests {
 
-	@Test
-	public void contextLoads() {
-	}
-
+    @Test
+    public void contextLoads() {
+    }
 }

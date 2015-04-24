@@ -15,22 +15,24 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
 public class ArticlesController {
-	
-	@Autowired
-	private ArticlesDao articlesDao;
-	
-	@JsonView(Article.ListView.class)
-	@RequestMapping(value="/articles", method={RequestMethod.GET, RequestMethod.HEAD})
-	public List<Article> getArticles() {
-		return articlesDao.getArticles();
-	}
-	
-	@RequestMapping(value="/articles/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
-	public Article getArticle(@PathVariable long id) {
-		Article article = articlesDao.getArticle(id);
-		
-		if (article == null) throw new ResourceNotFoundException(String.format("Article [id=%d]", id));
-		
-		return article;
-	}
+
+    @Autowired
+    private ArticlesDao articlesDao;
+
+    @JsonView(Article.ListView.class)
+    @RequestMapping(value = "/articles", method = {RequestMethod.GET, RequestMethod.HEAD})
+    public List<Article> getArticles() {
+        return articlesDao.getArticles();
+    }
+
+    @RequestMapping(value = "/articles/{id}", method = {RequestMethod.GET, RequestMethod.HEAD})
+    public Article getArticle(@PathVariable long id) {
+        Article article = articlesDao.getArticle(id);
+
+        if (article == null) {
+            throw new ResourceNotFoundException(String.format("Article [id=%d]", id));
+        }
+
+        return article;
+    }
 }

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class RestExceptionHandler {
-	@ExceptionHandler(ResourceNotFoundException.class)
-	public void resourceNotFoundException(RuntimeException e, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		response.sendError(HttpStatus.NOT_FOUND.value(), e.getMessage());
-	}
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public void resourceNotFoundException(RuntimeException e, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.sendError(HttpStatus.NOT_FOUND.value(), e.getMessage());
+    }
 }

@@ -5,6 +5,6 @@ import java.util.List;
 import api.articles.Article;
 
 public interface ArticlesDao {
-	public Article getArticle(long id);
-	public List<Article> getArticles();
+    Article getArticle(long id);
+    List<Article> getArticles();
 }
