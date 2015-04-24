@@ -1,4 +1,4 @@
-package api.error;
+package api.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException {
 	private static final long serialVersionUID = -535389132394488869L;

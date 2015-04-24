@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.articles.dao.ArticlesDao;
-import api.error.ResourceNotFoundException;
+import api.exceptions.ResourceNotFoundException;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -20,12 +20,12 @@ public class ArticlesController {
 	private ArticlesDao articlesDao;
 	
 	@JsonView(Article.ListView.class)
-	@RequestMapping(value="/articles", method=RequestMethod.GET)
+	@RequestMapping(value="/articles", method={RequestMethod.GET, RequestMethod.HEAD})
 	public List<Article> getArticles() {
 		return articlesDao.getArticles();
 	}
 	
-	@RequestMapping(value="/articles/{id}", method=RequestMethod.GET)
+	@RequestMapping(value="/articles/{id}", method={RequestMethod.GET, RequestMethod.HEAD})
 	public Article getArticle(@PathVariable long id) {
 		Article article = articlesDao.getArticle(id);
 		

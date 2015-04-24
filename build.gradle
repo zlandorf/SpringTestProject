@@ -37,6 +37,7 @@ war {
 dependencies {
 //    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
     compile("org.apache.tomcat.embed:tomcat-embed-jasper")
     compile("jstl:jstl:1.2")
     compile("org.springframework:spring-jdbc")
