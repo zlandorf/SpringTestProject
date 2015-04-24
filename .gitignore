@@ -4,3 +4,11 @@
 bin/
 build/
 .project
+gradle/
+gradlew
+gradlew.bat
+.idea
+SpringTestProject.iml
+SpringTestProject.ipr
+SpringTestProject.iws
+
