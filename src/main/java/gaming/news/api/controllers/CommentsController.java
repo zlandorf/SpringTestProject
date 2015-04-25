@@ -2,9 +2,10 @@ package gaming.news.api.controllers;
 
 import gaming.news.api.exceptions.InvalidParameterException;
 import gaming.news.api.exceptions.ResourceNotFoundException;
-import gaming.news.api.models.daos.ArticlesDao;
-import gaming.news.api.models.daos.CommentsDao;
+import gaming.news.api.models.entities.Article;
 import gaming.news.api.models.entities.Comment;
+import gaming.news.api.models.services.ArticlesService;
+import gaming.news.api.models.services.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,17 +22,15 @@ import javax.validation.Valid;
 @Controller
 public class CommentsController {
     @Autowired
-    CommentsDao commentsDao;
+    CommentsService commentsService;
     @Autowired
-    ArticlesDao articlesDao;
+    ArticlesService articlesService;
 
     @RequestMapping(value = "/articles/{articleId}/comment", method = RequestMethod.GET)
     public String comment(@PathVariable long articleId, Model model, HttpServletRequest request) throws ResourceNotFoundException {
-        if (articlesDao.getArticle(articleId) == null) {
-            throw new ResourceNotFoundException(String.format("Article [id=%d]", articleId));
-        }
+        Article article = articlesService.getArticle(articleId);
         Comment comment = new Comment();
-        comment.setArticleId(articleId);
+        comment.setArticleId(article.getId());
         model.addAttribute("comment", comment);
         return "comment";
     }
@@ -41,12 +40,7 @@ public class CommentsController {
         if (result.hasErrors()) {
             throw new InvalidParameterException("Invalid POST parameters");
         }
-        Long id = commentsDao.save(comment);
-        if (id == null) {
-            throw new ResourceNotFoundException(String.format("Article [id=%d]", comment.getArticleId()));
-        }
-        comment.setId(id);
-        return comment;
+        return commentsService.addComment(comment);
     }
 
     @RequestMapping(value = "/articles/{articleId}/comment", method = RequestMethod.POST, produces = {"text/html"})

@@ -38,9 +38,7 @@ public class ArticlesDaoImpl implements ArticlesDao {
     /**{@inheritDoc}*/
     public Article getArticle(long id) {
         try {
-            Article article = jdbcTemplate.queryForObject("select articles.id, articles.title, articles.description, (select count(*) from comments where comments.article_id = articles.id) as comment_count from articles where id = ?",  new Object[]{id}, new ArticleMapper());
-            article.setComments(commentsDao.getComments(article.getId()));
-            return article;
+            return  jdbcTemplate.queryForObject("select articles.id, articles.title, articles.description, (select count(*) from comments where comments.article_id = articles.id) as comment_count from articles where id = ?",  new Object[]{id}, new ArticleMapper());
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
