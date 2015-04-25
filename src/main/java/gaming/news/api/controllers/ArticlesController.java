@@ -26,7 +26,7 @@ public class ArticlesController {
     }
 
     @RequestMapping(value = "/articles/{id}", method = {RequestMethod.GET, RequestMethod.HEAD})
-    public Article getArticle(@PathVariable long id) {
+    public Article getArticle(@PathVariable long id) throws ResourceNotFoundException {
         Article article = articlesDao.getArticle(id);
 
         if (article == null) {
