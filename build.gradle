@@ -41,6 +41,7 @@ dependencies {
     compile("org.apache.tomcat.embed:tomcat-embed-jasper")
     compile("jstl:jstl:1.2")
     compile("org.springframework:spring-jdbc")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("com.h2database:h2")
 
     testCompile("org.springframework.boot:spring-boot-starter-test")
