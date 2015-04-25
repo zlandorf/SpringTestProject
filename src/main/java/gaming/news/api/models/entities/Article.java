@@ -15,21 +15,21 @@ public class Article {
     @JsonView(ListView.class)
     private String description;
     @JsonView(ListView.class)
-    private int countComments;
+    private int commentCount;
 
     private List<Comment> comments;
 
-    public Article(long id, String title, String description, int countComments) {
+    public Article(long id, String title, String description, int commentCount) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.countComments = countComments;
+        this.commentCount = commentCount;
         this.comments = null;
     }
 
     @Override
     public String toString() {
-        return String.format("Article[id=%d, title='%s', description='%s...', comments count='%d']\n", this.id, this.title, this.description.substring(0,  40), this.countComments);
+        return String.format("Article[id=%d, title='%s', description='%s...', comments count='%d']\n", this.id, this.title, this.description.substring(0,  40), this.commentCount);
     }
 
     public long getId() {
@@ -56,12 +56,12 @@ public class Article {
         this.description = description;
     }
 
-    public int getCountComments() {
-        return countComments;
+    public int getCommentCount() {
+        return commentCount;
     }
 
-    public void setCountComments(int countComments) {
-        this.countComments = countComments;
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
     }
 
     public List<Comment> getComments() {
