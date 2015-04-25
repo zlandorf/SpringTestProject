@@ -1,9 +1,18 @@
 package gaming.news.api.models.entities;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Comment {
     private long id;
+    @NotNull
     private long articleId;
+    @NotNull
+    @Size(min = 10, max = 256, message = "Comment must be at least 10 characters long")
     private String comment;
+
+    public Comment() {
+    }
 
     public Comment(long id, long articleId, String comment) {
         this.id = id;

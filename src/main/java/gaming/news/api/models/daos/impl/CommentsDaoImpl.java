@@ -29,6 +29,11 @@ protected JdbcTemplate jdbcTemplate;
         return jdbcTemplate.query("select id, article_id, comment from comments where article_id = ? ", new Object[]{articleId}, new CommentMapper());
     }
 
+    @Override
+    public int save(Comment comment) {
+        return jdbcTemplate.update("insert into comments (article_id, comment) select ?,? where exists (select id from articles where id = ?)", comment.getArticleId(), comment.getComment(), comment.getArticleId());
+    }
+
     private static final class CommentMapper implements RowMapper<Comment> {
         @Override
         public Comment mapRow(ResultSet rs, int rowNum) throws SQLException {
