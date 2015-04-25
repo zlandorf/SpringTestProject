@@ -6,7 +6,6 @@ import gaming.news.api.models.daos.ArticlesDao;
 import gaming.news.api.models.daos.CommentsDao;
 import gaming.news.api.models.entities.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Map;
 
 @Controller
 public class CommentsController {
@@ -43,10 +41,11 @@ public class CommentsController {
         if (result.hasErrors()) {
             throw new InvalidParameterException("Invalid POST parameters");
         }
-        int affectsRows = commentsDao.save(comment);
-        if (affectsRows <= 0) {
+        Long id = commentsDao.save(comment);
+        if (id == null) {
             throw new ResourceNotFoundException(String.format("Article [id=%d]", comment.getArticleId()));
         }
+        comment.setId(id);
         return comment;
     }
 

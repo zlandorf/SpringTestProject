@@ -29,11 +29,13 @@ public class ArticlesDaoImpl implements ArticlesDao {
     }
 
     @Override
+    /**{@inheritDoc}*/
     public List<Article> getArticles() {
         return jdbcTemplate.query("select articles.id, articles.title, articles.description, (select count(*) from comments where comments.article_id = articles.id) as article_count from articles", new ArticleMapper());
     }
 
     @Override
+    /**{@inheritDoc}*/
     public Article getArticle(long id) {
         try {
             Article article = jdbcTemplate.queryForObject("select articles.id, articles.title, articles.description, (select count(*) from comments where comments.article_id = articles.id) as article_count from articles where id = ?",  new Object[]{id}, new ArticleMapper());
