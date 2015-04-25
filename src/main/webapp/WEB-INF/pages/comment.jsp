@@ -25,7 +25,6 @@
                     %>
 
                     <spring:bind path="comment.comment">
-                        <c:set var="hasError" value="${not empty requestScope['org.springframework.validation.BindingResult.comment'].getFieldError('comment')}"/>
                         <div class="control-group ${status.error ? 'has-error' : ''}">
                             <form:label cssClass="control-label" path="comment">Comment:</form:label>
                             <div class="controls">
