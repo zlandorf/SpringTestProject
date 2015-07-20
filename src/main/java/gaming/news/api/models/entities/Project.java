@@ -13,7 +13,7 @@ public class Project {
 
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ProjectResource> resources;
 
     public long getId() {
