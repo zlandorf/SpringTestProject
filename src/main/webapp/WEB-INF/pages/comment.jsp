@@ -24,7 +24,7 @@
                         // Another way is to use <spring:bind path="form.*"><c:out value="${status.errors.allErrors}"/></spring:bind>
                     %>
 
-                    <spring:bind path="commentForm.text">
+                    <spring:bind path="commentForm.id">
                         <form:hidden path="id" value="${commentForm.id}"/>
                     </spring:bind>
 

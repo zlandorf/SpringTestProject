@@ -7,7 +7,7 @@ public class CommentForm {
     private long id = 0;
 
     @NotNull
-    @Size(min = 10, max = 256, message = "Comment must be at least 10 characters long")
+    @Size(min = 10, max = 256, message = "The comment must be between {min} and {max} characters long.")
     private String text;
 
     public CommentForm() {
