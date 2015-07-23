@@ -3,6 +3,8 @@ package gaming.news.api.models.entities;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Comment {
@@ -10,6 +12,8 @@ public class Comment {
     @GeneratedValue
     private long id;
 
+    @NotNull
+    @Size(min = 10, max = 256, message = "The comment must be between {min} and {max} characters long.")
     private String text;
 
     public Comment() {
