@@ -1,28 +1,23 @@
 package gaming.news.api.models.entities;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
 public class Comment {
+    @Id
+    @GeneratedValue
     private long id;
-    @NotNull
-    private long articleId;
-    @NotNull
-    @Size(min = 10, max = 256, message = "Comment must be at least 10 characters long")
-    private String comment;
+
+    private String text;
 
     public Comment() {
     }
 
-    public Comment(long id, long articleId, String comment) {
-        this.id = id;
-        this.articleId = articleId;
-        this.comment = comment;
-    }
-
     @Override
     public String toString() {
-        return String.format("Comment[id=%d, articleId='%s', comment='%s...']\n", getId(), getArticleId(), getComment());
+        return String.format("Comment[id=%d, text='%s...']\n", getId(), getText());
     }
 
     public long getId() {
@@ -33,19 +28,11 @@ public class Comment {
         this.id = id;
     }
 
-    public long getArticleId() {
-        return articleId;
+    public String getText() {
+        return text;
     }
 
-    public void setArticleId(long articleId) {
-        this.articleId = articleId;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setText(String text) {
+        this.text = text;
     }
 }

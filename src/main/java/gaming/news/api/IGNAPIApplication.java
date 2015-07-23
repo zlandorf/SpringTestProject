@@ -1,7 +1,10 @@
 package gaming.news.api;
 
+import gaming.news.api.models.entities.Article;
+import gaming.news.api.models.entities.Comment;
 import gaming.news.api.models.entities.Project;
 import gaming.news.api.models.entities.ProjectResource;
+import gaming.news.api.models.services.ArticleService;
 import gaming.news.api.models.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,6 +23,9 @@ public class IGNAPIApplication implements CommandLineRunner {
 
     @Autowired
     ProjectService service;
+
+    @Autowired
+    ArticleService articleService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -52,5 +58,17 @@ public class IGNAPIApplication implements CommandLineRunner {
             }
             System.out.printf("Project : [%d] %s {%s}\n", project.getId(), project.getName(), resourceNames.toString());
         }
+
+
+        System.out.println("Adding articles");
+        Article article = new Article();
+        article.setDescription("I am the first article of a very large number of articles");
+        article.setTitle("New game incoming !");
+
+        Comment comment = new Comment();
+        comment.setText("Wow, this game looks amazing");
+        article.addComment(comment);
+
+        articleService.saveArticle(article);
     }
 }

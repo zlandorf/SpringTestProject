@@ -1,30 +1,33 @@
 package gaming.news.api.models.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import javax.persistence.*;
 
+@Entity
 public class Article {
     public interface ListView {}
 
     @JsonView(ListView.class)
+    @Id
+    @GeneratedValue
     private long id;
+
     @JsonView(ListView.class)
     private String title;
     @JsonView(ListView.class)
     private String description;
     @JsonView(ListView.class)
-    private int commentCount;
+    private long commentCount;
 
+    @OneToMany(fetch = FetchType.LAZY)
     private List<Comment> comments;
 
-    public Article(long id, String title, String description, int commentCount) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.commentCount = commentCount;
-        this.comments = null;
+    public Article() {
+        comments = new ArrayList<>();
     }
 
     @Override
@@ -56,11 +59,11 @@ public class Article {
         this.description = description;
     }
 
-    public int getCommentCount() {
+    public long getCommentCount() {
         return commentCount;
     }
 
-    public void setCommentCount(int commentCount) {
+    public void setCommentCount(long commentCount) {
         this.commentCount = commentCount;
     }
 
@@ -70,5 +73,9 @@ public class Article {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
     }
 }
