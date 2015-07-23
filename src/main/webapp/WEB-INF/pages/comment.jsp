@@ -23,7 +23,7 @@
                         //<c:set var="result" value="requestScope['org.springframework.validation.BindingResult.comment']"/>
                         // Another way is to use <spring:bind path="form.*"><c:out value="${status.errors.allErrors}"/></spring:bind>
                     %>
-                    <form:hidden path="id" value="${comment.id}"/>
+
                     <spring:bind path="comment.text">
                         <div class="control-group ${status.error ? 'has-error' : ''}">
                             <form:label cssClass="control-label" path="text">Comment:</form:label>
