@@ -60,11 +60,11 @@ public class Article {
     }
 
     public long getCommentCount() {
-        return commentCount;
+        return getComments().size();
     }
 
     public void setCommentCount(long commentCount) {
-        this.commentCount = commentCount;
+        this.commentCount = getComments().size();
     }
 
     public List<Comment> getComments() {
@@ -72,7 +72,7 @@ public class Article {
     }
 
     public void setComments(List<Comment> comments) {
-        this.comments = comments;
+        setCommentCount(comments.size());
     }
 
     public void addComment(Comment comment) {

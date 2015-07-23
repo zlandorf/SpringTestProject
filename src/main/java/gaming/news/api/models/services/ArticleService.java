@@ -23,7 +23,7 @@ public class ArticleService {
     public List<Article> getAll() {
         List<Article> articles = repository.findAll();
         for (Article article : articles) {
-            article.setCommentCount(article.getComments().size());
+            Hibernate.initialize(article.getComments());
         }
         return articles;
     }
@@ -38,7 +38,6 @@ public class ArticleService {
         Article article = repository.findOne(id);
         if (article != null) {
             Hibernate.initialize(article.getComments());
-            article.setCommentCount(article.getComments().size());
         }
         return article;
     }
