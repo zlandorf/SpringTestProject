@@ -6,6 +6,7 @@ import gaming.news.api.models.entities.Article;
 import gaming.news.api.models.entities.Comment;
 import gaming.news.api.models.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,18 +24,9 @@ public class CommentController {
     @Autowired
     ArticleService articleService;
 
-    @RequestMapping(value = "/articles/{articleId}/comment", method = RequestMethod.GET)
-    public String comment(@PathVariable long articleId, Model model, HttpServletRequest request) throws ResourceNotFoundException {
-        Article article = articleService.get(articleId);
-        if (article == null) {
-            throw new ResourceNotFoundException(String.format("Article with id[%d]", articleId));
-        }
-        model.addAttribute("comment", new Comment());
-        return "comment";
-    }
-
-    @RequestMapping(value = "/articles/{articleId}/comment", method = RequestMethod.POST)
-    public @ResponseBody Comment addCommentDefault(@PathVariable long articleId, @Valid Comment comment, BindingResult result, HttpServletResponse response) throws ResourceNotFoundException, InvalidParameterException {
+    @RequestMapping(value = "/articles/{articleId}/comments", method = RequestMethod.POST)
+    @ResponseBody
+    public Comment addComment(@PathVariable long articleId, @Valid Comment comment, BindingResult result, HttpServletResponse response) throws ResourceNotFoundException, InvalidParameterException {
         Article article = articleService.get(articleId);
         if (article == null) {
             throw new ResourceNotFoundException(String.format("Article with id[%d]", articleId));
@@ -44,13 +36,24 @@ public class CommentController {
         }
         article.addComment(comment);
         articleService.saveArticle(article);
+        response.setStatus(HttpStatus.CREATED.value());
         return comment;
     }
 
-    @RequestMapping(value = "/articles/{articleId}/comment", method = RequestMethod.POST, produces = {"text/html"})
-    public String addComment(@PathVariable long articleId, @Valid Comment comment, BindingResult result, HttpServletResponse response) throws ResourceNotFoundException {
+    @RequestMapping(value = "/articles/{articleId}/comments", method = RequestMethod.GET, produces = {"text/html"})
+    public String commentHtml(@PathVariable long articleId, Model model, HttpServletRequest request) throws ResourceNotFoundException {
+        Article article = articleService.get(articleId);
+        if (article == null) {
+            throw new ResourceNotFoundException(String.format("Article with id[%d]", articleId));
+        }
+        model.addAttribute("comment", new Comment());
+        return "comment";
+    }
+
+    @RequestMapping(value = "/articles/{articleId}/comments", method = RequestMethod.POST, produces = {"text/html"})
+    public String addCommentHtml(@PathVariable long articleId, @Valid Comment comment, BindingResult result, HttpServletResponse response) throws ResourceNotFoundException {
         try {
-            addCommentDefault(articleId, comment, result, response);
+            addComment(articleId, comment, result, response);
             return "redirect:/articles/" + articleId;
         } catch (InvalidParameterException e) {
             return "comment";

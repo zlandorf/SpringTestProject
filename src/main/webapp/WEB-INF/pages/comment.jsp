@@ -18,7 +18,7 @@
         <div class="row">
             <div class="span8 offset2">
                 <h1>New comment</h1>
-                <form:form method="post" action="comment" modelAttribute="comment" class="form-horizontal">
+                <form:form method="post" action="comments" modelAttribute="comment" class="form-horizontal">
                     <% // This is a way to retrieve the bindingResult :
                         //<c:set var="result" value="requestScope['org.springframework.validation.BindingResult.comment']"/>
                         // Another way is to use <spring:bind path="form.*"><c:out value="${status.errors.allErrors}"/></spring:bind>
